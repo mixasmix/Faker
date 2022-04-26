@@ -116,4 +116,30 @@ class Company extends \Faker\Provider\Company
         }
         return substr($inn, 0, 4) . "01001";
     }
+
+    /**
+     * @return string
+     */
+    public static function ogrn()
+    {
+        $baseOgrn = self::baseOgrnGenerate();
+
+        return $baseOgrn . $baseOgrn % 11;
+    }
+
+    /**
+     * @return string
+     */
+    private static function baseOgrnGenerate()
+    {
+        $baseOgrn = sprintf(
+            '%d%d%d%d',
+            static::numerify('#'),
+            static::numerify('9#'),
+            static::numerify('##'),
+            static::numerify('#######')
+        );
+
+        return ($baseOgrn % 11 !== 0) ? $baseOgrn : self::baseOgrnGenerate();
+    }
 }
