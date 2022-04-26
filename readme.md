@@ -51,7 +51,7 @@ Faker requires PHP >= 5.3.3.
 ## Installation
 
 ```sh
-composer require fzaninotto/faker
+composer require mixasmix/faker
 ```
 
 ## Basic Usage
