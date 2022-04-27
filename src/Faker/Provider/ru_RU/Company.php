@@ -2,8 +2,13 @@
 
 namespace Faker\Provider\ru_RU;
 
+use Faker\DTO\CheckingAccountData;
+
 class Company extends \Faker\Provider\Company
 {
+    /**
+     * @var array
+     */
     protected static $companyNameFormats = array(
         '{{companyPrefix}} {{companyNameElement}}',
         '{{companyPrefix}} {{companyNameElement}}{{companyNameElement}}',
@@ -11,14 +16,26 @@ class Company extends \Faker\Provider\Company
         '{{companyPrefix}} {{companyNameElement}}{{companyNameElement}}{{companyNameElement}}{{companyNameSuffix}}',
     );
 
+    /**
+     * Массив коэффициентов для проверки корреспондентского счета
+     */
+    protected static $coefficientKsRs = [7, 1, 3, 7, 1, 3, 7, 1, 3, 7, 1, 3, 7, 1, 3, 7, 1, 3, 7, 1, 3, 7, 1];
+
+    /**
+     * @var array
+     */
     protected static $companyPrefixes = array(
-      'ООО', 'ЗАО', 'ООО Компания', 'ОАО', 'ОАО', 'ПАО', 'МКК', 'МФО'
+        'ООО', 'ЗАО', 'ООО Компания', 'ОАО', 'ОАО', 'ПАО', 'МКК', 'МФО'
     );
 
+    /**
+     * @var array
+     */
     protected static $companyNameSuffixes = array(
-      'Маш', 'Наладка', 'Экспедиция', 'Пром', 'Комплекс', 'Машина', 'Снос', '-М', 'Лизинг', 'Траст', 'Снаб',
-      '-H', 'Трест', 'Банк', 'Опт', 'Проф', 'Сбыт', 'Центр'
+        'Маш', 'Наладка', 'Экспедиция', 'Пром', 'Комплекс', 'Машина', 'Снос', '-М', 'Лизинг', 'Траст', 'Снаб',
+        '-H', 'Трест', 'Банк', 'Опт', 'Проф', 'Сбыт', 'Центр'
     );
+
     /**
      * @note Words and parts of words that usually used in company names
      */
@@ -30,6 +47,9 @@ class Company extends \Faker\Provider\Company
         'Реч', 'Флот', 'Cиб', 'Каз', 'Инж', 'Вод', 'Пив', 'Хмель', 'Мяс', 'Томск', 'Омск', 'Север', 'Лен'
     );
 
+    /**
+     * @var array
+     */
     protected static $catchPhraseWords = array(
         array(
             'Адаптивная', 'Дополнительно', 'Улучшить', 'Ассимилировали', 'Автоматическая', 'Сбалансированный', 'Бизнес-ориентированных', 'Централизации', 'Клонировать', 'Совместимость', 'Настраивается', 'Кросс-группа', 'Кросс-платформы', 'Клиентоориентированного', 'Децентрализации', 'Де-инженерии', 'Передал', 'Оцифровки', 'Распространяться', 'Разное', 'Габаритами', 'Расширения', 'Предприятия', 'Эргономичность', 'Эксклюзив', 'Расширенный', 'Очного', 'Целенаправленный', 'Фронтовые', 'Полностью настраиваемый', 'Функции', 'Основной', 'Будущее', 'Низовые', 'Горизонтальной', 'Реализовано', 'Инновационных', 'Интегрированный', 'Интуитивно', 'Обратная', 'Управлять', 'Обязательно', 'Наблюдение', 'Многоканальной', 'Многосторонний', 'Многослойная', 'Многоуровневые', 'Сеть', 'Объектно-ориентированный', 'Открытая архитектура', 'Открытое', 'Оперативная', 'Оптимизация', 'Дополнительно', 'Органический', 'Организованная', 'Стойкость', 'Постоянный', 'Постепенно', 'Полярности', 'Превентивный', 'Инициативный', 'Прибыльных', 'Глубокий', 'Программируемый', 'Прогрессивный', 'Ключ', 'Ориентированные на качество', 'Реактивная', 'Реорганизации', 'Повторно контекст', 'Модернизированной', 'Снижается', 'Копирования', 'Размер', 'Надежный', 'Бесшовные', 'Обеспеченный', 'Собственной активации', 'Запрашиваемого', 'Автономный', 'Упорядочить', 'Переключение', 'Синхронизированы', 'Синергетический', 'Согласования', 'Командный', 'Общий', 'Тройной буферизацией', 'Универсальный', 'Размера', 'Комплектация', 'Пользователя', 'Удобный', 'Универсальный', 'Виртуальный', 'Фантазер',
@@ -47,15 +67,15 @@ class Company extends \Faker\Provider\Company
      * @note Randomly took from this list - some jobs titles for each letter
      */
     protected static $jobTitleFormat = array(
-      'Абразивоструйщик', 'Автоинструктор', 'Администратор', 'Арт-директор', 'Архивист', 'Бариста', 'Бармен',
-      'Бестиарий (гладиатор)', 'Бизнес-аналитик', 'Бухгалтер', 'Ветеринар', 'Водитель', 'Водолаз', 'Геймдизайнер',
-      'Герольд', 'Гитарный мастер', 'Горный проводник', 'Детектив', 'Диджей', 'Диктор', 'Дипломат', 'Егерь', 'Жокей',
-      'Зубной техник', 'Интеллектуал', 'Информационный работник', 'Кассир', 'Ковбой', 'Креативный директор', 'Критик',
-      'Крупье', 'Лесоруб', 'Лингвист', 'Машинист', 'Менеджер', 'Музыкант', 'Научный сотрудник', 'Офис-менеджер',
-      'Печник', 'Пианист', 'Писатель', 'Продюсер', 'Промоутер', 'Психолог', 'Радист', 'Редактор', 'Садовник',
-      'Системный аналитик', 'Стилист', 'Столяр', 'Сторож', 'Телефонистка', 'Телохранитель', 'Технический писатель',
-      'Учёный', 'Физик', 'Финансовый советник', 'Фотограф', 'Фрезеровщик', 'Художник', 'Чабан', 'Штурман',
-      'Экономист', 'Электромонтёр'
+        'Абразивоструйщик', 'Автоинструктор', 'Администратор', 'Арт-директор', 'Архивист', 'Бариста', 'Бармен',
+        'Бестиарий (гладиатор)', 'Бизнес-аналитик', 'Бухгалтер', 'Ветеринар', 'Водитель', 'Водолаз', 'Геймдизайнер',
+        'Герольд', 'Гитарный мастер', 'Горный проводник', 'Детектив', 'Диджей', 'Диктор', 'Дипломат', 'Егерь', 'Жокей',
+        'Зубной техник', 'Интеллектуал', 'Информационный работник', 'Кассир', 'Ковбой', 'Креативный директор', 'Критик',
+        'Крупье', 'Лесоруб', 'Лингвист', 'Машинист', 'Менеджер', 'Музыкант', 'Научный сотрудник', 'Офис-менеджер',
+        'Печник', 'Пианист', 'Писатель', 'Продюсер', 'Промоутер', 'Психолог', 'Радист', 'Редактор', 'Садовник',
+        'Системный аналитик', 'Стилист', 'Столяр', 'Сторож', 'Телефонистка', 'Телохранитель', 'Технический писатель',
+        'Учёный', 'Физик', 'Финансовый советник', 'Фотограф', 'Фрезеровщик', 'Художник', 'Чабан', 'Штурман',
+        'Экономист', 'Электромонтёр'
     );
 
     /**
@@ -120,7 +140,7 @@ class Company extends \Faker\Provider\Company
     /**
      * @return string
      */
-    public static function ogrn()
+    public static function ogrn(): string
     {
         $baseOgrn = self::baseOgrnGenerate();
 
@@ -130,16 +150,118 @@ class Company extends \Faker\Provider\Company
     /**
      * @return string
      */
-    private static function baseOgrnGenerate()
+    public static function ogrnip(): string
+    {
+        $baseOgrn = self::baseOgrnGenerate(15);
+
+        return $baseOgrn . $baseOgrn % 13;
+    }
+
+    /**
+     * @param string $currency
+     *
+     * @return CheckingAccountData
+     */
+    public static function rs(string $currency = '810'): CheckingAccountData {
+        $bik = static::bik();
+
+        $baseRs = sprintf(
+            '%d%d%d%d%d',
+            40701, //для негосударственных финансовых организаций резидентов
+            $currency,
+            0, //контрольная сумма, заменяем пока на ноль
+            static::numberBetween(1000, 9999), //код отделения
+            static::numerify('#######'),
+        );
+
+        return new CheckingAccountData(
+            substr_replace(
+                $baseRs,
+                self::getCheckSumRsKs(substr($bik, -3) . $baseRs),
+                8,
+                1,
+            ),
+            $bik,
+        );
+    }
+
+    /**
+     * @param string $currency
+     *
+     * @return CheckingAccountData
+     */
+    public static function ks(string $currency = '810'): CheckingAccountData
+    {
+        $bik = static::bik();
+
+        $baseKs = sprintf(
+            '%d%d%d%d%d%d',
+            301,
+            10,
+            $currency,
+            0, //контрольная сумма, заменяем пока на ноль
+            static::numberBetween(10000000, 99999999),
+            substr($bik, -3),
+        );
+
+        return new CheckingAccountData(
+            substr_replace(
+                $baseKs,
+                self::getCheckSumRsKs('0' . substr($bik, -5, 2) . $baseKs),
+                8,
+                1,
+            ),
+            $bik,
+        );
+    }
+
+    /**
+     * @return string
+     */
+    public static function bik(): string
+    {
+        return sprintf(
+            '%s%s%s%s',
+            '04',
+            static::numberBetween(10, 99),
+            static::numberBetween(10, 99),
+            static::numberBetween(100, 999),
+        );
+    }
+
+    /**
+     * @param int $length
+     *
+     * @return string
+     */
+    private static function baseOgrnGenerate($length = 13): string
     {
         $baseOgrn = sprintf(
-            '%d%d%d%d',
+            '%s%s%s%s',
             static::numerify('#'),
             static::numerify('9#'),
             static::numerify('##'),
-            static::numerify('#######')
+            $length === 13 ? static::numerify('#######') : static::numerify('#########')
         );
 
-        return ($baseOgrn % 11 !== 0) ? $baseOgrn : self::baseOgrnGenerate();
+        return ($baseOgrn % $length === 13 ? 11 : 13 !== 0) ? $baseOgrn : self::baseOgrnGenerate();
+    }
+
+
+    /**
+     * @param string $bikKey
+     *
+     * @return string
+     */
+    private static function getCheckSumRsKs(string $bikKey): string
+    {
+        $checkSum = 0;
+
+        //вычисляем контрольное число
+        foreach (static::$coefficientKsRs as $item => $key) {
+            $checkSum += $key * $bikKey[$item];
+        }
+
+        return substr(substr($checkSum, -1) * 3, -1);
     }
 }
